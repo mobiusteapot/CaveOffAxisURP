@@ -18,6 +18,12 @@ public class PointOfViewTransform : MonoBehaviour
         }
     }
 
+    private void Update(){
+        if(this.transform.hasChanged){
+            UpdateTrackers();
+        }
+    }
+
     public void UpdateTrackers(){
 
         if (povTrackers == null) {
