@@ -28,7 +28,6 @@ public class PointOfViewTransform : MonoBehaviour
         }
     }
 
-
     void OnDrawGizmos() {
         /*
         if (povTrackers == null) {

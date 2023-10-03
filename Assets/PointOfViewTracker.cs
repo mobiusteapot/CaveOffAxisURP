@@ -28,7 +28,9 @@ public class PointOfViewTracker : MonoBehaviour
         return cameraOffAxis.Camera;
     }
     public void UpdatePOV() {
-        cameraOffAxis.PointOfView = povTransform.transform.position;
+        Vector3 newPosition = povTransform.transform.position;
+        // Rotate the X and Z relative to this object's Y rotation
+        cameraOffAxis.PointOfView = newPosition;
     }
 }
 
