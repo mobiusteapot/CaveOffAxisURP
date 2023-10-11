@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -165,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 52603938}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.36, y: 0, z: -0.74}
+  m_LocalPosition: {x: 0.01, y: 0, z: -0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -301,8 +301,8 @@ GameObject:
   - component: {fileID: 1490807387}
   - component: {fileID: 1490807386}
   - component: {fileID: 1490807385}
-  - component: {fileID: 1490807384}
   - component: {fileID: 1490807383}
+  - component: {fileID: 1490807384}
   m_Layer: 0
   m_Name: Camera_Front_L
   m_TagString: Untagged
@@ -322,6 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraType: 2
   cameraOffAxis: {fileID: 1490807384}
   povTransform: {fileID: 52603939}
 --- !u!114 &1490807384
@@ -340,7 +341,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: 0, z: 0}
   nearClipPlane: 0.3
   setNearClipPlane: 0
-  pointOfView: {x: 0.36, y: 0, z: -0.74}
+  pointOfView: {x: 0.01, y: 0, z: -0.12}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -475,8 +476,8 @@ GameObject:
   - component: {fileID: 1695295380}
   - component: {fileID: 1695295379}
   - component: {fileID: 1695295378}
-  - component: {fileID: 1695295377}
   - component: {fileID: 1695295376}
+  - component: {fileID: 1695295377}
   m_Layer: 0
   m_Name: Camera_Side1_L
   m_TagString: Untagged
@@ -496,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraType: 1
   cameraOffAxis: {fileID: 1695295377}
   povTransform: {fileID: 52603939}
 --- !u!114 &1695295377
@@ -511,10 +513,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewportPosition: {x: 0, y: 0, z: 5.33}
-  viewportRotation: {x: 0, y: -90, z: 0}
+  viewportRotation: {x: 0, y: 90, z: 0}
   nearClipPlane: 0.3
   setNearClipPlane: 0
-  pointOfView: {x: 0.36, y: 0, z: -0.74}
+  pointOfView: {x: 0.01, y: 0, z: -0.12}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -649,8 +651,8 @@ GameObject:
   - component: {fileID: 1799781926}
   - component: {fileID: 1799781925}
   - component: {fileID: 1799781924}
-  - component: {fileID: 1799781923}
   - component: {fileID: 1799781922}
+  - component: {fileID: 1799781923}
   m_Layer: 0
   m_Name: Camera_Side2_L
   m_TagString: Untagged
@@ -670,6 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraType: 0
   cameraOffAxis: {fileID: 1799781923}
   povTransform: {fileID: 52603939}
 --- !u!114 &1799781923
@@ -685,10 +688,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewportPosition: {x: 0, y: 0, z: 5.33}
-  viewportRotation: {x: 0, y: 90, z: 0}
+  viewportRotation: {x: 0, y: -90, z: 0}
   nearClipPlane: 0.3
   setNearClipPlane: 0
-  pointOfView: {x: 0.36, y: 0, z: -0.74}
+  pointOfView: {x: 0.01, y: 0, z: -0.12}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
