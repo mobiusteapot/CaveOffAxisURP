@@ -8,11 +8,16 @@ namespace ETC.CaveCavern
 {
     public class CameraSBSOutput : MonoBehaviour
     {
+        [SerializeField] private Rect sourceRect;
         public bool debugTint = false;
         [SerializeField] private RenderTexture outputRenderTexture1;
         [SerializeField] private RenderTexture outputRenderTexture2;
         private void OnEnable()
         {
+            for (int i = 1; i < Display.displays.Length; i++)
+            {
+                Display.displays[i].Activate();
+            }
             if (outputRenderTexture1 == null || outputRenderTexture2 == null)
             {
                 Debug.LogError("OffAxisCameraData: RenderTextures are null. Disable and re-enable after assigning them.");
@@ -31,22 +36,27 @@ namespace ETC.CaveCavern
             Debug.Log("attempting render");
             if (camera == this.GetComponent<Camera>())
             {
+
                 // Default color is 0.5, 0.5, 0.5, 0.5
                 Color defaultColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                Color color1 = debugTint ? Color.red : defaultColor;
+                Color color2 = debugTint ? Color.blue : defaultColor;
+
                 GL.PushMatrix();
                 GL.LoadPixelMatrix(0, Screen.width, Screen.height, 0);
-                Graphics.DrawTexture(new Rect(0, Screen.height / 2, Screen.width, Screen.height / 2), outputRenderTexture1);
-                Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height / 2), outputRenderTexture2);
 
-              //  Graphics.DrawTexture(new Rect(-Screen.width/2, -Screen.height / 2, Screen.width, Screen.height/2), outputRenderTexture2, new Rect(0, 0, 1, 1), 0, 0, 0, 0, defaultColor);
+                Graphics.DrawTexture(new Rect(0, Screen.height / 4, Screen.width, Screen.height / 2), outputRenderTexture1, sourceRect, 0, 0, 0, 0, color1);
+                Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height / 2), outputRenderTexture2, sourceRect, 0, 0, 0, 0, color2);
 
-               // Graphics.DrawTexture(new Rect(-Screen.width/2, 0, Screen.width, Screen.height/2), outputRenderTexture1, new Rect(0, 0, outputRenderTexture1.width, outputRenderTexture1.height), 0, 0, 0, 0, defaultColor);
-                // Tint red and blue if debugTint is true
-                if(debugTint){
-                    Graphics.DrawTexture(new Rect(0, Screen.height / 2, Screen.width, Screen.height / 2), outputRenderTexture1, new Rect(0, 0, 1, 1), 0, 0, 0, 0, Color.red);
-                    Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height / 2), outputRenderTexture2, new Rect(0, 0, 1, 1), 0, 0, 0, 0, Color.blue);
-                }
                 GL.PopMatrix();
+                RenderTexture.active = null;
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.D)){
+                debugTint = !debugTint;
             }
         }
         // private void OnGUI() {

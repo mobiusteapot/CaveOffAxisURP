@@ -37,6 +37,12 @@ namespace ETC.CaveCavern {
             }
         }
 
+        public void UpdateCameraOffset(string cameraOffsetString)
+        {
+
+            float.TryParse(cameraOffsetString, out cameraOffset);
+        }
+
         void OnDrawGizmos() {
             /*
             if (povTrackers == null) {

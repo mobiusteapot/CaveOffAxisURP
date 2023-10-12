@@ -1,0 +1,54 @@
+{
+    "name": "SteamVRTrackerInput",
+    "maps": [
+        {
+            "name": "HeadTracking",
+            "id": "0371602d-5ac4-405d-a12c-c264e7b7b1a0",
+            "actions": [
+                {
+                    "name": "TrackerPos",
+                    "type": "Value",
+                    "id": "32cc0d80-d765-44fc-b901-b50c16030b67",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TrackerRot",
+                    "type": "Value",
+                    "id": "b8d76ba0-7d37-4c04-81a7-288b5cd73e28",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c11fc0b7-2ecf-4afe-9dd4-d1101d68bd26",
+                    "path": "<XRViveTracker>{Chest}/devicePose/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TrackerPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9204099-5b83-4a68-bf2f-006b91497680",
+                    "path": "<XRInputV1::HTC::HTCViveTrackerOpenXR>{Chest}/deviceRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TrackerRot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -1,6 +1,4 @@
 using Assets.CameraOffAxisProjection.Scripts;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 #if UNITY_EDITOR
@@ -26,9 +24,11 @@ namespace ETC.CaveCavern {
                 this.gameObject.name = ogName + "_R";
                 isRightCamera = false;
                 var leftCamera = Instantiate(this.gameObject, this.transform);
+                leftCamera.gameObject.transform.localPosition = new Vector3(0, 0, 0);
                 isRightCamera = true;
                 leftCamera.name = ogName + "_L";
-                leftCamera.GetComponent<OffAxisCameraData>().povTransform.AddPointOfViewTracker(this);
+                var lc = leftCamera.GetComponent<OffAxisCameraData>();
+                lc.povTransform.AddPointOfViewTracker(lc);
             }    
         }
         private void OnEnable(){
