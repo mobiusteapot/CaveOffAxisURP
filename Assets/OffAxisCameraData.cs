@@ -2,6 +2,7 @@ using Assets.CameraOffAxisProjection.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,19 +10,56 @@ using UnityEditor;
 namespace ETC.CaveCavern {
     [RequireComponent(typeof(CameraOffAxisProjection))]
     public class OffAxisCameraData : MonoBehaviour {
+        public float cameraOffset = 0;
+        public bool isRightCamera = false;
+
         [SerializeField] private CaveCameraType cameraType;
+        [SerializeField] private RenderTexture outputRenderTexture1;
+        [SerializeField] private RenderTexture outputRenderTexture2;
         [SerializeField, HideInInspector] private CameraOffAxisProjection cameraOffAxis;
 
         [SerializeField] private PointOfViewTransform povTransform;
-
+        // Todo: Shallow render-only camera?
+        private void Awake() {
+            if(isRightCamera){
+                var ogName = this.gameObject.name;
+                this.gameObject.name = ogName + "_R";
+                isRightCamera = false;
+                var leftCamera = Instantiate(this.gameObject, this.transform);
+                isRightCamera = true;
+                leftCamera.name = ogName + "_L";
+                leftCamera.GetComponent<OffAxisCameraData>().povTransform.AddPointOfViewTracker(this);
+            }    
+        }
+        private void OnEnable(){
+            if (outputRenderTexture1 == null || outputRenderTexture2 == null) {
+                Debug.LogError("OffAxisCameraData: RenderTextures are null. Disable and re-enable after assigning them.");
+            } else {
+                RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
+            }
+        }
+        private void OnDisable() {
+            RenderPipelineManager.beginCameraRendering -= OnBeginCameraRendering;    
+        }
         private void Reset() {
             this.cameraOffAxis = this.GetComponent<CameraOffAxisProjection>();
             this.povTransform = FindObjectOfType<PointOfViewTransform>();
         }
 
-        private void OnValidate() {
+        public void OnValidate() {
             if (povTransform != null) {
                 povTransform.AddPointOfViewTracker(this);
+            }
+        }
+
+        private void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera) {
+            if (camera == this.cameraOffAxis.Camera) {
+                camera.targetTexture = isRightCamera ? outputRenderTexture1 : outputRenderTexture2;
+
+                UpdatePOVPosition();
+                UpdatePOVRotation();
+                // Render the camera to the render texture
+
             }
         }
 
@@ -30,6 +68,8 @@ namespace ETC.CaveCavern {
         }
         public void UpdatePOVPosition() {
             Vector3 newPosition = povTransform.transform.position;
+
+            newPosition.x += isRightCamera ? cameraOffset : -cameraOffset;
             // Rotate the X and Z relative to this object's Y rotation
             cameraOffAxis.PointOfView = newPosition;
         }

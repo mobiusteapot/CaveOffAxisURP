@@ -7,6 +7,7 @@ using UnityEditor;
 
 namespace ETC.CaveCavern {
     public class PointOfViewTransform : MonoBehaviour {
+        public float cameraOffset = 0;
         [SerializeField, HideInInspector] private List<OffAxisCameraData> povTrackers;
 
         public void AddPointOfViewTracker(OffAxisCameraData tracker) {
@@ -32,6 +33,7 @@ namespace ETC.CaveCavern {
             foreach (OffAxisCameraData povTracker in povTrackers) {
                 povTracker.UpdatePOVPosition();
                 povTracker.UpdatePOVRotation();
+                povTracker.cameraOffset = cameraOffset;
             }
         }
 
