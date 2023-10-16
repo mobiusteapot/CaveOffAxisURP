@@ -354,6 +354,7 @@
         this.useAspectAsViewportSize = value;
       }
     }
+    [HideInInspector] public bool DrawAllGizmos = false;
 
     public void Reset()
     {
@@ -392,22 +393,39 @@
       this.ConfigureCamera();
     }
 
+    protected void OnDrawGizmos()
+    {
+      if (!DrawAllGizmos)
+      {
+        DrawCameraFrustrum();
+        Debug.Log("DrawAllGizmos periodt");
+      }
+    }
     protected void OnDrawGizmosSelected()
     {
+      if (DrawAllGizmos)
+      {
+        DrawCameraFrustrum();
+        Debug.Log("Drawing OnDrawGizmos selected: " + gameObject.name);
+      } 
+    }
+    protected void DrawCameraFrustrum(){
       var originalMatrix = Gizmos.matrix;
       Gizmos.matrix = this.transform.localToWorldMatrix;
 
-      Gizmos.color = Color.white;
+      Gizmos.color = Color.gray;
       Gizmos.DrawLine(this.localFrustumCorners[LowerLeftCornerIndex], this.localFrustumCorners[UpperLeftCornerIndex]);
       Gizmos.DrawLine(this.localFrustumCorners[UpperLeftCornerIndex], this.localFrustumCorners[UpperRightCornerIndex]);
       Gizmos.DrawLine(this.localFrustumCorners[UpperRightCornerIndex], this.localFrustumCorners[LowerRightCornerIndex]);
       Gizmos.DrawLine(this.localFrustumCorners[LowerLeftCornerIndex], this.localFrustumCorners[LowerRightCornerIndex]);
-
+      foreach(Vector3 corner in localFrustumCorners){
+        Gizmos.DrawLine(WorldPointOfView, corner);
+      }
       Gizmos.matrix = originalMatrix;
     }
-        public Vector3[] GetLocalFrustumCorners() {
-            return this.localFrustumCorners;
-        }
+    public Vector3[] GetLocalFrustumCorners() {
+        return this.localFrustumCorners;
+    }
 
     private void ConfigureCamera()
     {

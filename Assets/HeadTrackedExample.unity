@@ -220,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 52603938}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.41, y: 0, z: 0.35}
+  m_LocalPosition: {x: 0.39, y: 0, z: 0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -518,9 +518,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -634,15 +634,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceRect:
     serializedVersion: 2
-    x: -0.5
+    x: 0
     y: 0
-    width: 2
-    height: 2
+    width: 1280
+    height: 1024
+  blitMaterial: {fileID: 2100000, guid: ddc38e831833546cdb3691797eb93380, type: 2}
   debugTint: 0
   outputRenderTexture1: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
     type: 2}
   outputRenderTexture2: {fileID: 8400000, guid: 4137d8d6519f74ec29f25f9ef5e31743,
     type: 2}
+  testingPreviewRT: {fileID: 8400000, guid: 8484d727e19db40b9a8e3ec36cf0ca24, type: 2}
 --- !u!114 &802973285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +731,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 2
+  m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -747,7 +749,7 @@ Transform:
   m_GameObject: {fileID: 802973283}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -9.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1392,7 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: 0
+  cameraIPD: 0
   isRightCamera: 1
   cameraType: 2
   outputRenderTexture1: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
@@ -1415,13 +1417,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewportPosition: {x: 0, y: 0, z: 5.33}
   viewportRotation: {x: 0, y: 0, z: 0}
-  nearClipPlane: 0.3
+  nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: -1.4, y: 0, z: 0.22999999}
+  pointOfView: {x: 0.39999998, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
   useAspectAsViewportSize: 0
+  DrawAllGizmos: 0
 --- !u!114 &1490807385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1497,9 +1500,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 10
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1565,7 +1568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: 0
+  cameraIPD: 0
   isRightCamera: 0
   cameraType: 1
   outputRenderTexture1: {fileID: 0}
@@ -1586,13 +1589,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewportPosition: {x: 0, y: 0, z: 5.33}
   viewportRotation: {x: 0, y: 90, z: 0}
-  nearClipPlane: 0.3
+  nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: -1.4, y: 0, z: 0.22999999}
+  pointOfView: {x: 0.39999998, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
   useAspectAsViewportSize: 0
+  DrawAllGizmos: 0
 --- !u!114 &1695295378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,7 +1680,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 10
   field of view: 60
   orthographic: 0
@@ -2086,7 +2090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: 0
+  cameraIPD: 0
   isRightCamera: 0
   cameraType: 0
   outputRenderTexture1: {fileID: 0}
@@ -2107,13 +2111,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewportPosition: {x: 0, y: 0, z: 5.33}
   viewportRotation: {x: 0, y: -90, z: 0}
-  nearClipPlane: 0.3
+  nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: -1.4, y: 0, z: 0.22999999}
+  pointOfView: {x: 0.39999998, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
   useAspectAsViewportSize: 0
+  DrawAllGizmos: 0
 --- !u!114 &1799781924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2197,7 +2202,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 10
   field of view: 60
   orthographic: 0

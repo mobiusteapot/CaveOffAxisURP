@@ -8,7 +8,7 @@ using UnityEditor;
 namespace ETC.CaveCavern {
     [RequireComponent(typeof(CameraOffAxisProjection))]
     public class OffAxisCameraData : MonoBehaviour {
-        public float cameraOffset = 0;
+        public float cameraIPD = 0;
         public bool isRightCamera = false;
 
         [SerializeField] private CaveCameraType cameraType;
@@ -17,6 +17,8 @@ namespace ETC.CaveCavern {
         [SerializeField, HideInInspector] private CameraOffAxisProjection cameraOffAxis;
 
         [SerializeField] private PointOfViewTransform povTransform;
+
+        private float rotationAmount;
         // Todo: Shallow render-only camera?
         private void Awake() {
             if(isRightCamera){
@@ -56,34 +58,31 @@ namespace ETC.CaveCavern {
             if (camera == this.cameraOffAxis.Camera) {
                 camera.targetTexture = isRightCamera ? outputRenderTexture1 : outputRenderTexture2;
 
-                UpdatePOVPosition();
-                UpdatePOVRotation();
-                // Render the camera to the render texture
-
             }
         }
 
         public Camera GetPOVCamera() {
             return cameraOffAxis.Camera;
         }
-        public void UpdatePOVPosition() {
+        public void UpdatePOVPosition(float tranRotY) {
             Vector3 newPosition = povTransform.transform.position;
-
-            newPosition.x += isRightCamera ? cameraOffset : -cameraOffset;
+            //float tranRotRatio = 
+            newPosition.x += isRightCamera ? cameraIPD : -cameraIPD;
             // Rotate the X and Z relative to this object's Y rotation
             cameraOffAxis.PointOfView = newPosition;
         }
+        /*
         public void UpdatePOVRotation() {
-            Vector3 newRotation = new Vector3(0, povTransform.transform.rotation.eulerAngles.y, 0);
-            float rotationOffset = cameraType switch {
+            // Update rotation relative to "parent" (ie, two dots rotating)
+            float newRot = cameraType switch {
                 CaveCameraType.Center => 0,
                 CaveCameraType.Left => -90,
                 CaveCameraType.Right => 90,
                 _ => 0
             };
-            newRotation.y += rotationOffset;
             cameraOffAxis.ViewportRotation = newRotation;
         }
+        */
     }
 
 #if UNITY_EDITOR

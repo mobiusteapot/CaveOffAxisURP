@@ -31,9 +31,9 @@ namespace ETC.CaveCavern {
                 return;
             }
             foreach (OffAxisCameraData povTracker in povTrackers) {
-                povTracker.UpdatePOVPosition();
-                povTracker.UpdatePOVRotation();
-                povTracker.cameraOffset = cameraOffset;
+                //povTracker.UpdatePOVPosition();
+                //povTracker.UpdatePOVRotation();
+                povTracker.cameraIPD = cameraOffset;
             }
         }
 
