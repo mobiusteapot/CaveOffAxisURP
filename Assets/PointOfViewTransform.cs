@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -8,8 +10,19 @@ using UnityEditor;
 namespace ETC.CaveCavern {
     public class PointOfViewTransform : MonoBehaviour {
         public float cameraOffset = 0;
+        private float povInitialY = 0;
         [SerializeField, HideInInspector] private List<OffAxisCameraData> povTrackers;
 
+        public float PovYRot {
+            get {
+                float normalizedRot = transform.rotation.y;
+                normalizedRot = Mathf.Abs(normalizedRot) * 1.425f * 90f;
+                return normalizedRot;
+            }
+        }
+        private void Awake(){
+            povInitialY = PovYRot;
+        }
         public void AddPointOfViewTracker(OffAxisCameraData tracker) {
             if (povTrackers == null) {
                 povTrackers = new List<OffAxisCameraData>();
@@ -24,6 +37,9 @@ namespace ETC.CaveCavern {
                 UpdateTrackers();
             }
         }
+        public float GetPOVTransformRotation(){
+            return Mathf.Abs(PovYRot - povInitialY);
+        }
 
         public void UpdateTrackers() {
 
@@ -31,9 +47,8 @@ namespace ETC.CaveCavern {
                 return;
             }
             foreach (OffAxisCameraData povTracker in povTrackers) {
-                //povTracker.UpdatePOVPosition();
-                //povTracker.UpdatePOVRotation();
                 povTracker.cameraIPD = cameraOffset;
+                povTracker.UpdatePOVPosition(GetPOVTransformRotation());
             }
         }
 

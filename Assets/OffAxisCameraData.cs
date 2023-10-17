@@ -8,6 +8,7 @@ using UnityEditor;
 namespace ETC.CaveCavern {
     [RequireComponent(typeof(CameraOffAxisProjection))]
     public class OffAxisCameraData : MonoBehaviour {
+        [SerializeField] private float sanityCheck = 0;
         public float cameraIPD = 0;
         public bool isRightCamera = false;
 
@@ -17,8 +18,24 @@ namespace ETC.CaveCavern {
         [SerializeField, HideInInspector] private CameraOffAxisProjection cameraOffAxis;
 
         [SerializeField] private PointOfViewTransform povTransform;
+        private Vector3 targetPosition;
 
         private float rotationAmount;
+        /// <summary>
+        /// POV transform rotation ratio from 0 to 1, with 1 being fully offset, and 0 being no offset
+        /// </summary>
+        /// <param name="povTransformRot">Value from 0 to 180 for current POV transform</param>
+        /// <returns></returns>
+        public float GetRotationRatio(float povTransformRot) {
+            float rotOffset = cameraType switch {
+                CaveCameraType.Center => 0.00001f,
+                CaveCameraType.Left => 90,
+                CaveCameraType.Right => 90,
+                _ => 0
+            };
+            float ratio = 1 - Mathf.Clamp(Mathf.Abs(povTransformRot - rotOffset)/ 90,0,1);
+            return ratio;
+        }
         // Todo: Shallow render-only camera?
         private void Awake() {
             if(isRightCamera){
@@ -65,21 +82,37 @@ namespace ETC.CaveCavern {
             return cameraOffAxis.Camera;
         }
         public void UpdatePOVPosition(float tranRotY) {
-            Vector3 newPosition = povTransform.transform.position;
-            //float tranRotRatio = 
-            newPosition.x += isRightCamera ? cameraIPD : -cameraIPD;
+            targetPosition = povTransform.transform.position;
+            float targetPosOffset = isRightCamera ? cameraIPD : -cameraIPD;
+            bool isLeftOrRight = cameraType == CaveCameraType.Left || cameraType == CaveCameraType.Right;
+
+            targetPosOffset *= GetRotationRatio(tranRotY);
+            if (isLeftOrRight)
+                targetPosition.z += targetPosOffset;
+            else targetPosition.x += targetPosOffset;
             // Rotate the X and Z relative to this object's Y rotation
-            cameraOffAxis.PointOfView = newPosition;
+            cameraOffAxis.PointOfView = targetPosition;
+        }
+        public void OnDrawGizmos(){
+            if (!Application.isPlaying) return;
+            const float gizmoSize = 0.15f;
+            Vector3 gizmoPos = povTransform.transform.position;
+
+            Gizmos.color = isRightCamera ? Color.red : Color.blue;
+            // Rotate by 90 degrees if left or right
+            bool isLeftOrRight = cameraType == CaveCameraType.Left || cameraType == CaveCameraType.Right;
+            if(isLeftOrRight){
+                gizmoPos.z = targetPosition.z;
+                Gizmos.matrix = cameraOffAxis.transform.worldToLocalMatrix;
+            } else{
+                gizmoPos.x = targetPosition.x;
+            }
+            Gizmos.DrawSphere(gizmoPos, gizmoSize);
         }
         /*
         public void UpdatePOVRotation() {
             // Update rotation relative to "parent" (ie, two dots rotating)
-            float newRot = cameraType switch {
-                CaveCameraType.Center => 0,
-                CaveCameraType.Left => -90,
-                CaveCameraType.Right => 90,
-                _ => 0
-            };
+
             cameraOffAxis.ViewportRotation = newRotation;
         }
         */

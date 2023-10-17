@@ -413,7 +413,7 @@
       var originalMatrix = Gizmos.matrix;
       Gizmos.matrix = this.transform.localToWorldMatrix;
 
-      Gizmos.color = Color.gray;
+      Gizmos.color = Color.green;
       Gizmos.DrawLine(this.localFrustumCorners[LowerLeftCornerIndex], this.localFrustumCorners[UpperLeftCornerIndex]);
       Gizmos.DrawLine(this.localFrustumCorners[UpperLeftCornerIndex], this.localFrustumCorners[UpperRightCornerIndex]);
       Gizmos.DrawLine(this.localFrustumCorners[UpperRightCornerIndex], this.localFrustumCorners[LowerRightCornerIndex]);

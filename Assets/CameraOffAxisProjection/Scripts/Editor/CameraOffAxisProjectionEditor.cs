@@ -62,7 +62,7 @@
           MessageType.Info);
       }
 
-        if(GUILayout.Button("Draw all Camera gizmos (unused rn)")){
+        if(GUILayout.Button("Draw all Camera gizmos")){
           cameras = FindObjectsOfType<CameraOffAxisProjection>();
           shouldDrawAllHandles = !shouldDrawAllHandles;
           foreach(CameraOffAxisProjection camera in cameras){

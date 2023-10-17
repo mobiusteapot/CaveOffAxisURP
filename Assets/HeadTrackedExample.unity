@@ -219,8 +219,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52603938}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.39, y: 0, z: 0.71}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1c102786addd045b0b166ad4fc03dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: 0
+  cameraOffset: 0.68
   povTrackers:
   - {fileID: 1490807383}
   - {fileID: 1695295376}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52603938}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2fadf230d1919748a9aa21d40f74619, type: 3}
   m_Name: 
@@ -1394,6 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sanityCheck: 0
   cameraIPD: 0
   isRightCamera: 1
   cameraType: 2
@@ -1419,7 +1420,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: 0, z: 0}
   nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: 0.39999998, y: 0, z: 0.59}
+  pointOfView: {x: 0.010000075, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -1545,17 +1546,16 @@ GameObject:
   m_Component:
   - component: {fileID: 1695295381}
   - component: {fileID: 1695295380}
-  - component: {fileID: 1695295379}
   - component: {fileID: 1695295378}
   - component: {fileID: 1695295376}
   - component: {fileID: 1695295377}
   m_Layer: 0
-  m_Name: Camera_Side1_L
+  m_Name: Camera_Side1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1695295376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,11 +1568,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sanityCheck: 0
   cameraIPD: 0
-  isRightCamera: 0
+  isRightCamera: 1
   cameraType: 1
-  outputRenderTexture1: {fileID: 0}
-  outputRenderTexture2: {fileID: 0}
+  outputRenderTexture1: {fileID: 8400000, guid: 4137d8d6519f74ec29f25f9ef5e31743,
+    type: 2}
+  outputRenderTexture2: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
+    type: 2}
   cameraOffAxis: {fileID: 1695295377}
   povTransform: {fileID: 52603941}
 --- !u!114 &1695295377
@@ -1591,7 +1594,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: 90, z: 0}
   nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: 0.39999998, y: 0, z: 0.59}
+  pointOfView: {x: 0.69, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -1641,14 +1644,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &1695295379
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695295375}
-  m_Enabled: 1
 --- !u!20 &1695295380
 Camera:
   m_ObjectHideFlags: 0
@@ -2067,17 +2062,16 @@ GameObject:
   m_Component:
   - component: {fileID: 1799781927}
   - component: {fileID: 1799781926}
-  - component: {fileID: 1799781925}
   - component: {fileID: 1799781924}
   - component: {fileID: 1799781922}
   - component: {fileID: 1799781923}
   m_Layer: 0
-  m_Name: Camera_Side2_L
+  m_Name: Camera_Side2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1799781922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2090,11 +2084,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842998983381aa84fb4483b6285e960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sanityCheck: 0
   cameraIPD: 0
-  isRightCamera: 0
+  isRightCamera: 1
   cameraType: 0
-  outputRenderTexture1: {fileID: 0}
-  outputRenderTexture2: {fileID: 0}
+  outputRenderTexture1: {fileID: 8400000, guid: 4137d8d6519f74ec29f25f9ef5e31743,
+    type: 2}
+  outputRenderTexture2: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
+    type: 2}
   cameraOffAxis: {fileID: 1799781923}
   povTransform: {fileID: 52603941}
 --- !u!114 &1799781923
@@ -2113,7 +2110,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: -90, z: 0}
   nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: 0.39999998, y: 0, z: 0.59}
+  pointOfView: {x: 0.69, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -2163,14 +2160,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &1799781925
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799781921}
-  m_Enabled: 1
 --- !u!20 &1799781926
 Camera:
   m_ObjectHideFlags: 0
