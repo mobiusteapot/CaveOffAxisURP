@@ -398,7 +398,6 @@
       if (!DrawAllGizmos)
       {
         DrawCameraFrustrum();
-        Debug.Log("DrawAllGizmos periodt");
       }
     }
     protected void OnDrawGizmosSelected()
@@ -406,7 +405,6 @@
       if (DrawAllGizmos)
       {
         DrawCameraFrustrum();
-        Debug.Log("Drawing OnDrawGizmos selected: " + gameObject.name);
       } 
     }
     protected void DrawCameraFrustrum(){

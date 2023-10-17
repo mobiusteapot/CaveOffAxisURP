@@ -1395,7 +1395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanityCheck: 0
-  cameraIPD: 0
+  cameraIPD: 0.68
   isRightCamera: 1
   cameraType: 2
   outputRenderTexture1: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: 0, z: 0}
   nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: 0.010000075, y: 0, z: 0.59}
+  pointOfView: {x: 0.68999994, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -1569,12 +1569,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanityCheck: 0
-  cameraIPD: 0
+  cameraIPD: 0.68
   isRightCamera: 1
   cameraType: 1
-  outputRenderTexture1: {fileID: 8400000, guid: 4137d8d6519f74ec29f25f9ef5e31743,
+  outputRenderTexture1: {fileID: 8400000, guid: dfb3d4e84cfd44d43b04a0b868dfdd1a,
     type: 2}
-  outputRenderTexture2: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
+  outputRenderTexture2: {fileID: 8400000, guid: dfb3d4e84cfd44d43b04a0b868dfdd1a,
     type: 2}
   cameraOffAxis: {fileID: 1695295377}
   povTransform: {fileID: 52603941}
@@ -1594,7 +1594,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: 90, z: 0}
   nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: 0.69, y: 0, z: 0.59}
+  pointOfView: {x: 0.01, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1
@@ -2085,12 +2085,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanityCheck: 0
-  cameraIPD: 0
+  cameraIPD: 0.68
   isRightCamera: 1
   cameraType: 0
-  outputRenderTexture1: {fileID: 8400000, guid: 4137d8d6519f74ec29f25f9ef5e31743,
+  outputRenderTexture1: {fileID: 8400000, guid: dfb3d4e84cfd44d43b04a0b868dfdd1a,
     type: 2}
-  outputRenderTexture2: {fileID: 8400000, guid: 620bf50ec3d7640178ccc3e29ee6538a,
+  outputRenderTexture2: {fileID: 8400000, guid: dfb3d4e84cfd44d43b04a0b868dfdd1a,
     type: 2}
   cameraOffAxis: {fileID: 1799781923}
   povTransform: {fileID: 52603941}
@@ -2110,7 +2110,7 @@ MonoBehaviour:
   viewportRotation: {x: 0, y: -90, z: 0}
   nearClipPlane: 0.01
   setNearClipPlane: 0
-  pointOfView: {x: 0.69, y: 0, z: 0.59}
+  pointOfView: {x: 0.01, y: 0, z: 0.59}
   useFixedAspectRatio: 0
   aspectWidth: 1
   aspectHeight: 1

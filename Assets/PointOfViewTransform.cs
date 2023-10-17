@@ -57,32 +57,6 @@ namespace ETC.CaveCavern {
 
             float.TryParse(cameraOffsetString, out cameraOffset);
         }
-
-        void OnDrawGizmos() {
-            /*
-            if (povTrackers == null) {
-                return;
-            }
-            Matrix4x4 tempMat = Gizmos.matrix;
-            foreach (PointOfViewTracker povTracker in povTrackers) {
-                Camera c = povTracker.GetPOVCamera();
-                Color tempColor = Gizmos.color;
-                Gizmos.matrix = povTracker.transform.localToWorldMatrix;
-
-                if (c.orthographic) {
-                    var size = c.orthographicSize;
-                    Gizmos.DrawWireCube(Vector3.forward * (c.nearClipPlane + (c.farClipPlane - c.nearClipPlane) / 2)
-                        , new Vector3(size * 2.0f, size * 2.0f * c.aspect, c.farClipPlane - c.nearClipPlane));
-                } else {
-                    Gizmos.matrix = Matrix4x4.TRS(povTracker.transform.position, povTracker.transform.rotation, Vector3.one);
-                    Gizmos.DrawFrustum(Vector3.zero, c.fieldOfView, c.farClipPlane, c.nearClipPlane, c.aspect);
-                }
-                Gizmos.color = tempColor;
-
-            }
-            Gizmos.matrix = tempMat;
-            */
-        }
     }
 
 #if UNITY_EDITOR

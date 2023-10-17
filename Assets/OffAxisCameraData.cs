@@ -8,7 +8,6 @@ using UnityEditor;
 namespace ETC.CaveCavern {
     [RequireComponent(typeof(CameraOffAxisProjection))]
     public class OffAxisCameraData : MonoBehaviour {
-        [SerializeField] private float sanityCheck = 0;
         public float cameraIPD = 0;
         public bool isRightCamera = false;
 
@@ -20,7 +19,6 @@ namespace ETC.CaveCavern {
         [SerializeField] private PointOfViewTransform povTransform;
         private Vector3 targetPosition;
 
-        private float rotationAmount;
         /// <summary>
         /// POV transform rotation ratio from 0 to 1, with 1 being fully offset, and 0 being no offset
         /// </summary>
@@ -74,7 +72,6 @@ namespace ETC.CaveCavern {
         private void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera) {
             if (camera == this.cameraOffAxis.Camera) {
                 camera.targetTexture = isRightCamera ? outputRenderTexture1 : outputRenderTexture2;
-
             }
         }
 
@@ -109,13 +106,6 @@ namespace ETC.CaveCavern {
             }
             Gizmos.DrawSphere(gizmoPos, gizmoSize);
         }
-        /*
-        public void UpdatePOVRotation() {
-            // Update rotation relative to "parent" (ie, two dots rotating)
-
-            cameraOffAxis.ViewportRotation = newRotation;
-        }
-        */
     }
 
 #if UNITY_EDITOR

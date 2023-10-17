@@ -62,7 +62,7 @@
           MessageType.Info);
       }
 
-        if(GUILayout.Button("Draw all Camera gizmos")){
+        if(GUILayout.Button("Toggle Always Draw Camera Frustrum")){
           cameras = FindObjectsOfType<CameraOffAxisProjection>();
           shouldDrawAllHandles = !shouldDrawAllHandles;
           foreach(CameraOffAxisProjection camera in cameras){
