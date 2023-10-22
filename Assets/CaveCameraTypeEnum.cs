@@ -1,6 +1,6 @@
 
 namespace ETC.CaveCavern {
-    enum CaveCameraType {
+    public enum CaveCameraType {
         Left,
         Right,
         Center

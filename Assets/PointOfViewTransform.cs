@@ -12,6 +12,7 @@ namespace ETC.CaveCavern {
         public float cameraOffset = 0;
         private float povInitialY = 0;
         [SerializeField, HideInInspector] private List<OffAxisCameraData> povTrackers;
+        private bool invertCameras = false;
 
         public float PovYRot {
             get {
@@ -51,10 +52,15 @@ namespace ETC.CaveCavern {
                 povTracker.UpdatePOVPosition(GetPOVTransformRotation());
             }
         }
+        // Remove this later this makes no sense here
+        public void UpdateRenderTextureForCameras(RenderTexture newRT1, RenderTexture newRT2) {
+            foreach (OffAxisCameraData povTracker in povTrackers) {
+                povTracker.UpdateRenderTextures(newRT1, newRT2);
+            }
+        }
 
         public void UpdateCameraOffset(string cameraOffsetString)
         {
-
             float.TryParse(cameraOffsetString, out cameraOffset);
         }
     }

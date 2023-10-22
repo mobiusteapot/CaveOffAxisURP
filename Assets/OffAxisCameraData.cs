@@ -53,10 +53,12 @@ namespace ETC.CaveCavern {
                 Debug.LogError("OffAxisCameraData: RenderTextures are null. Disable and re-enable after assigning them.");
             } else {
                 RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
+                RenderPipelineManager.endCameraRendering += OnEndCameraRendering;
             }
         }
         private void OnDisable() {
             RenderPipelineManager.beginCameraRendering -= OnBeginCameraRendering;    
+            RenderPipelineManager.endCameraRendering -= OnEndCameraRendering;
         }
         private void Reset() {
             this.cameraOffAxis = this.GetComponent<CameraOffAxisProjection>();
@@ -74,6 +76,10 @@ namespace ETC.CaveCavern {
                 camera.targetTexture = isRightCamera ? outputRenderTexture1 : outputRenderTexture2;
             }
         }
+        private void OnEndCameraRendering(ScriptableRenderContext context, Camera camera) {
+            if (camera == this.cameraOffAxis.Camera) {
+            }
+        }
 
         public Camera GetPOVCamera() {
             return cameraOffAxis.Camera;
@@ -89,6 +95,11 @@ namespace ETC.CaveCavern {
             else targetPosition.x += targetPosOffset;
             // Rotate the X and Z relative to this object's Y rotation
             cameraOffAxis.PointOfView = targetPosition;
+        }
+        public void UpdateRenderTextures(RenderTexture newRT1, RenderTexture newRT2) {
+
+            outputRenderTexture1 = newRT1;
+            outputRenderTexture2 = newRT2;
         }
         public void OnDrawGizmos(){
             if (!Application.isPlaying) return;
