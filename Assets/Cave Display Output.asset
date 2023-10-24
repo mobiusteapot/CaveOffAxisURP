@@ -17,7 +17,7 @@ MonoBehaviour:
     unityDisplay: 0
   displayBinding2:
     caveDisplay: 0
-    unityDisplay: 2
+    unityDisplay: 1
   displayBinding3:
     caveDisplay: 1
-    unityDisplay: 2
+    unityDisplay: 1

@@ -86,7 +86,7 @@ namespace ETC.CaveCavern {
         }
         public void UpdatePOVPosition(float tranRotY) {
             targetPosition = povTransform.transform.position;
-            float targetPosOffset = isRightCamera ? cameraIPD : -cameraIPD;
+            float targetPosOffset = isRightCamera ? cameraIPD/2 : -cameraIPD/2;
             bool isLeftOrRight = cameraType == CaveCameraType.Left || cameraType == CaveCameraType.Right;
 
             targetPosOffset *= GetRotationRatio(tranRotY);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
+using UnityEngine.InputSystem.XR;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,20 +10,32 @@ using UnityEditor;
 
 namespace ETC.CaveCavern {
     public class PointOfViewTransform : MonoBehaviour {
+        [SerializeField] private TrackedPoseDriver trackedPoseDriver;
+        private Quaternion initialRotationOffset;
+        bool hasInitialRotationOffset = false;
         public float cameraOffset = 0;
-        private float povInitialY = 0;
+        private float povInitialYRot = 0;
+
         [SerializeField, HideInInspector] private List<OffAxisCameraData> povTrackers;
         private bool invertCameras = false;
-
         public float PovYRot {
             get {
                 float normalizedRot = transform.rotation.y;
                 normalizedRot = Mathf.Abs(normalizedRot) * 1.425f * 90f;
+                normalizedRot = invertCameras ? 180 - normalizedRot : normalizedRot;
                 return normalizedRot;
             }
         }
         private void Awake(){
-            povInitialY = PovYRot;
+            povInitialYRot = PovYRot;
+        }
+        private void ApplyRotationOffset() {
+            // Get initial rotation of tracked pose driver to offset the rotation of the POV transform
+            initialRotationOffset = trackedPoseDriver.transform.rotation;
+            // Set the transform by the offset because the tracked pose driver is a parent with an arbitrary rotation
+            // New rotation is the inverse of the tracked pose driver rotation
+            transform.rotation = Quaternion.Inverse(initialRotationOffset);
+            Debug.Log("Initial Rotation Offset:" + initialRotationOffset.eulerAngles);
         }
         public void AddPointOfViewTracker(OffAxisCameraData tracker) {
             if (povTrackers == null) {
@@ -34,12 +47,16 @@ namespace ETC.CaveCavern {
         }
 
         private void Update() {
+            if(!hasInitialRotationOffset && trackedPoseDriver.transform.rotation != quaternion.identity) {
+                ApplyRotationOffset();
+                hasInitialRotationOffset = true;
+            }
             if (this.transform.hasChanged) {
                 UpdateTrackers();
             }
         }
         public float GetPOVTransformRotation(){
-            return Mathf.Abs(PovYRot - povInitialY);
+            return Mathf.Abs(povInitialYRot - PovYRot);
         }
 
         public void UpdateTrackers() {
@@ -47,6 +64,7 @@ namespace ETC.CaveCavern {
             if (povTrackers == null) {
                 return;
             }
+            Debug.Log("PovRotation:" + GetPOVTransformRotation());
             foreach (OffAxisCameraData povTracker in povTrackers) {
                 povTracker.cameraIPD = cameraOffset;
                 povTracker.UpdatePOVPosition(GetPOVTransformRotation());
@@ -58,10 +76,12 @@ namespace ETC.CaveCavern {
                 povTracker.UpdateRenderTextures(newRT1, newRT2);
             }
         }
-
         public void UpdateCameraOffset(string cameraOffsetString)
         {
             float.TryParse(cameraOffsetString, out cameraOffset);
+        }
+        public void ToggleInvertCameras() {
+            invertCameras = !invertCameras;
         }
     }
 

@@ -6,11 +6,16 @@ namespace ETC.CaveCavern
     public class CameraSBSOutput : MonoBehaviour
     {
         [SerializeField] private CaveDisplayAsset caveDisplayAsset;
-        [SerializeField] private Material blitMaterial;
+        // [SerializeField] private Material blitMaterial;
         public bool debugTint = false;
-        [SerializeField] private RenderTexture outputRenderTexture1;
-        [SerializeField] private RenderTexture outputRenderTexture2;
+        [SerializeField] private RenderTexture outputRenderTexture1Left;
+        [SerializeField] private RenderTexture outputRenderTexture2Left;
+        [SerializeField] private RenderTexture outputRenderTexture1Center;
+        [SerializeField] private RenderTexture outputRenderTexture2Center;
+        [SerializeField] private RenderTexture outputRenderTexture1Right;
+        [SerializeField] private RenderTexture outputRenderTexture2Right;
         [SerializeField] private RenderTexture testingPreviewRT;
+        [SerializeField] private CaveCameraType cameraType;
 
         public bool hasUpdatedRenderTextures = false;
 
@@ -20,14 +25,7 @@ namespace ETC.CaveCavern
             {
                 Display.displays[i].Activate();
             }
-            if (outputRenderTexture1 == null || outputRenderTexture2 == null)
-            {
-                Debug.LogError("OffAxisCameraData: RenderTextures are null. Disable and re-enable after assigning them.");
-            }
-            else
-            {
-                RenderPipelineManager.endCameraRendering += OnBeginCameraRendering;
-            }
+            RenderPipelineManager.endCameraRendering += OnBeginCameraRendering;
         }
         private void OnDisable()
         {
@@ -41,37 +39,51 @@ namespace ETC.CaveCavern
             Debug.Log("attempting render");
             if (camera == this.GetComponent<Camera>())
             {
-                int currentDisplay = caveDisplayAsset.GetDisplayIndexFromCaveDisplay(CaveCameraType.Center);
+#if UNITY_EDITOR
+                int currentDisplay = 0;
+#else
+                int currentDisplay = caveDisplayAsset.GetDisplayIndexFromCaveDisplay(cameraType);
+#endif
                 Debug.Log("rendering to display " + currentDisplay + " of display length " + Display.displays.Length);
                 int cScreenWidth = Display.displays[currentDisplay].systemWidth;
                 int cScreenHeight = Display.displays[currentDisplay].systemHeight;
                 Debug.Log("rendering to display " + currentDisplay + " " + cScreenWidth + "x" + cScreenHeight);
                 Rect screenOutRect = new Rect(0, 0, cScreenWidth, cScreenHeight);
                 // Todo: Hotkey to flip eye
-                Color defaultColor = Color.white;
+                Color defaultColor = new Color(0.5f, 0.5f, 0.5f, 1f);
                 Color color1 = debugTint ? Color.red : defaultColor;
                 Color color2 = debugTint ? Color.blue : defaultColor;
                 GL.PushMatrix();
                 GL.LoadPixelMatrix(0, cScreenWidth, cScreenHeight, 0);
                 RenderTexture rt = RenderTexture.GetTemporary(cScreenWidth, cScreenHeight, 0, RenderTextureFormat.ARGB32);
 
+                /*
                 if (hasUpdatedRenderTextures) {
                     RenderTexture output1 = RenderTexture.GetTemporary(cScreenWidth, cScreenHeight / 2, 0, RenderTextureFormat.ARGB32);
                     RenderTexture output2 = RenderTexture.GetTemporary(cScreenWidth, cScreenHeight / 2, 0, RenderTextureFormat.ARGB32);
-                    outputRenderTexture1 = output1;
-                    outputRenderTexture2 = output2;
                     hasUpdatedRenderTextures = false;
                 }
-
-                CaveManager.instance.UpdateRenderTexture(outputRenderTexture1, outputRenderTexture2);
+                */
                 // Todo: Listener for camera to apply dynamically sized render textures
 
-
-                Graphics.CopyTexture(outputRenderTexture1, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, 0);
-                Graphics.CopyTexture(outputRenderTexture2, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, cScreenHeight / 2);
+                switch (cameraType) {
+                    // Switch on camera type
+                    case CaveCameraType.Left:
+                        Graphics.CopyTexture(outputRenderTexture1Left, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, 0);
+                        Graphics.CopyTexture(outputRenderTexture2Left, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, cScreenHeight / 2);
+                        break;
+                    case CaveCameraType.Center:
+                        Graphics.CopyTexture(outputRenderTexture1Center, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, 0);
+                        Graphics.CopyTexture(outputRenderTexture2Center, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, cScreenHeight / 2);
+                        break;
+                    case CaveCameraType.Right:
+                        Graphics.CopyTexture(outputRenderTexture1Right, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, 0);
+                        Graphics.CopyTexture(outputRenderTexture2Right, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, cScreenHeight / 2);
+                        break;
+                }
                 Graphics.CopyTexture(rt, testingPreviewRT);
-                blitMaterial.SetColor("_BaseColor", color1);
-                blitMaterial.SetColor("_SecondaryColor", color2);
+               // blitMaterial.SetColor("_BaseColor", color1);
+               // blitMaterial.SetColor("_SecondaryColor", color2);
 
                // Graphics.DrawTexture(screenOutRect, rt);
                 Graphics.DrawTexture(screenOutRect, rt, new Rect(0,0,1,1), 0, 0, 0, 0, defaultColor, null);
