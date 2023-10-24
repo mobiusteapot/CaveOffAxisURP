@@ -33,6 +33,9 @@ namespace ETC.CaveCavern
         {
             RenderPipelineManager.endCameraRendering -= OnBeginCameraRendering;
         }
+        public void ToggleCurrentRenderTexture() {
+            hasUpdatedRenderTextures = !hasUpdatedRenderTextures;
+        }
         private void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
         {
             Debug.Log("attempting render");
@@ -57,6 +60,7 @@ namespace ETC.CaveCavern
                     RenderTexture output2 = RenderTexture.GetTemporary(cScreenWidth, cScreenHeight / 2, 0, RenderTextureFormat.ARGB32);
                     outputRenderTexture1 = output1;
                     outputRenderTexture2 = output2;
+                    hasUpdatedRenderTextures = false;
                 }
 
                 CaveManager.instance.UpdateRenderTexture(outputRenderTexture1, outputRenderTexture2);
@@ -65,11 +69,12 @@ namespace ETC.CaveCavern
 
                 Graphics.CopyTexture(outputRenderTexture1, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, 0);
                 Graphics.CopyTexture(outputRenderTexture2, 0, 0, 0, 0, cScreenWidth, cScreenHeight / 2, rt, 0, 0, 0, cScreenHeight / 2);
-               // Graphics.CopyTexture(rt, testingPreviewRT);
+                Graphics.CopyTexture(rt, testingPreviewRT);
                 blitMaterial.SetColor("_BaseColor", color1);
                 blitMaterial.SetColor("_SecondaryColor", color2);
 
-                Graphics.DrawTexture(screenOutRect, rt, blitMaterial);
+               // Graphics.DrawTexture(screenOutRect, rt);
+                Graphics.DrawTexture(screenOutRect, rt, new Rect(0,0,1,1), 0, 0, 0, 0, defaultColor, null);
                 RenderTexture.ReleaseTemporary(rt);
                 GL.PopMatrix();
             }
